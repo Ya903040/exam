@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/pixi.min.js"></script>
+    <script>
+        let app;
+        let me;
+        let keys = {};
+        let keysDiv;
+
+        window.onload = function() {
+            app = new PIXI.Application(
+                {
+                    width : 1400,
+                    height : 1400,
+                    backdroundColor : 0xAAAA
+            
+                }
+            );
+            //document.body.app.backgroundColor = "red";
+            // players area
+            document.body.appendChild(app.view);
+
+            me = new PIXI.Sprite.from("images/boom.png");
+            me.anchor.set(0.5);
+            me.x = app.view.width / 2;
+            me.y = 500;
+
+            app.stage.addChild(me);
+
+            // players acts
+            app.stage.interactive = true;
+            app.stage.on("pointermove", movePlayer); 
+            
+            window.addEventListener("keydown", keysdown);
+            window.addEventListener("keyup", keysup);
+            app.ticker.add(gameLoop);
+
+            keysDiv = document.querySelector("#keys");
+        }
+        function gameLoop(){
+            keysDiv.innerHTML = JSON.stringify(keys);
+            if(keys["87"]){
+                me.y -= 5;
+            }
+            if(keys["83"]){
+                me.y += 5;
+            }
+            if(keys["68"]){
+                me.x += 5;
+            }
+            if(keys["65"]){
+                me.x -= 5;
+            }
+        }
+        function movePlayer(its){
+            let pos = its.data.global;
+            me.x = pos.x;
+            me.y = pos.y;
+        }
+        function keysdown(e){
+            //me.width /= 1.05;
+            keys[e.keyCode] = true;
+        }
+        function keysup(e){
+            //me.height *= 1.05;
+            keys[e.keyCode] = false;
+        }
+        
+    </script>
+</head>
+<body>
+    <div id = "keys">
+
+    </div>
+    
+</body>
+</html>
