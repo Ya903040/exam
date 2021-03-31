@@ -11,28 +11,55 @@
         let me;
         let keys = {};
         let keysDiv;
-
+        let rect;
+        let rect1;
+        let arrRects = [];
+        var street = 1200;
+        /*function point (x,y,w,h){
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+        }*/
         window.onload = function() {
             app = new PIXI.Application(
                 {
-                    width : 1400,
-                    height : 1400,
+                    width : 2000,
+                    height : 600,
                     backdroundColor : 0xAAAA
             
                 }
             );
+            
             //document.body.app.backgroundColor = "red";
             // players area
-            document.body.appendChild(app.view);
+            document.querySelector("#gameDiv").appendChild(app.view);
 
-            me = new PIXI.Sprite.from("images/boom.png");
+            app.stage.interactive = true;
+
+            app.stage.on("pointerdown",pointerDown);
+            app.stage.on("pointerup",pointerUp);
+
+            me = new PIXI.Sprite.from("images/superhero.png");
+            
             me.anchor.set(0.5);
+            me.width = 50;
+            me.height = 50;
             me.x = app.view.width / 2;
-            me.y = 500;
+            me.y = app.view.height / 2;
 
             app.stage.addChild(me);
 
-            // players acts
+            /*
+
+            rect1 = new PIXI.Sprite.from("images/square.png");
+            rect1.anchor.set(0.1);
+            rect1.x = app.view.width / 2 + 200;
+            rect1.y = app.view.height / 2 + 160;
+            rect1.width = 20;
+            rect1.height = 200;*/
+            let a = 20;
+
             app.stage.interactive = true;
             app.stage.on("pointermove", movePlayer); 
             
@@ -41,9 +68,84 @@
             app.ticker.add(gameLoop);
 
             keysDiv = document.querySelector("#keys");
+
+            for (let i = 0; i < 5; i++){
+                rect1 = new PIXI.Sprite.from("images/square.png");
+                rect1.anchor.set(0.1);
+                rect1.x = app.view.width / 2 + 200 + i*50;
+                rect1.y = app.view.height / 2 + 160;
+                rect1.width = 10;
+                rect1.height = 200;
+                
+
+                if(keys["68"] && me.x >= street){
+                    street += 5;
+                    rect1.x -= 5;
+                    console.log(street);
+                }
+                if(keys["65"] && me.x <= street - 100){
+                    street -= 5;
+                    rect1.x += 5; 
+                }
+                app.stage.addChild(rect1);
+            }
+
+
+            /*
+            for (let i = 0; i < 5; i++){
+                //arrRects(i) = 
+                arrRects(i) = new PIXI.Sprite.from("images/square.png");
+                arrRects(i).anchor.set(0.01);
+                arrRects(i).x = app.view.width / 2 + 100 + i * 20;
+                arrRects(i).y = app.view.height / 2 + 160 + i;
+                arrRects(i).width = 20;
+                arrRects(i).height = 200;
+            }
+            */
+
+
+            //app.stage.addChild(rect);
+            //app.stage.addChild(rect1);
+
+
+           
+            //var myp = point;
+           
+                // result = (number-11)// 4 + 1
+                // print result 
+            
+            //app.stage.addChild(rect);
+
+            // players acts
+            
         }
+        function pointerDown(e){
+            me.width *= 1.05;
+            me.height *= 1.05;
+
+        }
+        function pointerUp(e){
+            me.width /= 1.05;
+            me.height /= 1.05;
+
+        }
+
         function gameLoop(){
-            keysDiv.innerHTML = JSON.stringify(keys);
+            //keysDiv.innerHTML = JSON.stringify(keys);
+            
+            
+            if(me){
+                me.y += 5;
+                if(me.y >= 585){
+                    me.y = 585;
+                }
+            }
+            if(keys["32"]){
+                me.y -= 30;     
+                if(me.y <= 15){
+                    me.y = 15;
+                }
+            }
             if(keys["87"]){
                 me.y -= 5;
             }
@@ -52,9 +154,15 @@
             }
             if(keys["68"]){
                 me.x += 5;
+                if(me.x >= 1180 && me.x <= 1180 + 10 && me.y >= 460){
+                    me.x -=5;
+                }
             }
             if(keys["65"]){
                 me.x -= 5;
+                if(me.x <= 15){
+                    me.x = 15;
+                }
             }
         }
         function movePlayer(its){
@@ -65,6 +173,7 @@
         function keysdown(e){
             //me.width /= 1.05;
             keys[e.keyCode] = true;
+            //console.log(keys);
         }
         function keysup(e){
             //me.height *= 1.05;
@@ -74,7 +183,7 @@
     </script>
 </head>
 <body>
-    <div id = "keys">
+    <div id = "gameDiv">
 
     </div>
     
