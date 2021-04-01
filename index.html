@@ -20,13 +20,6 @@
         let arrRects2 = [];
         var street = 1200;
 
-        //alert("sss");
-        /*function point (x,y,w,h){
-            this.x = x;
-            this.y = y;
-            this.w = w;
-            this.h = h;
-        }*/
         window.onload = function () {
             app = new PIXI.Application(
                 {
@@ -37,8 +30,6 @@
                 }
             );
 
-            //document.body.app.backgroundColor = "red";
-            // players area
             document.querySelector("#gameDiv").appendChild(app.view);
 
             app.stage.interactive = true;
@@ -55,15 +46,6 @@
             player.y = app.view.height / 2;
 
             app.stage.addChild(player);
-
-            /*
-
-            rect1 = new PIXI.Sprite.from("images/square.png");
-            rect1.anchor.set(0.1);
-            rect1.x = app.view.width / 2 + 200;
-            rect1.y = app.view.height / 2 + 160;
-            rect1.width = 20;
-            rect1.height = 200;*/
             let a = 20;
 
             app.stage.interactive = true;
@@ -133,23 +115,23 @@
 
         function loopR(e) {
             for (let i = 0; i < ap; i++) {
-                arrRects[i].x -= 10;
+                if (player.x + player.width <= arrRects[i].x && player.x >= arrRects[i].x + wall.width && player.y <= arrRects[i].y + wall.height || player.y + player.height >= arrRects[i].y + wall.height + 20) {
+                    arrRects[i].x -= 10;
+                }
 
             }
 
         }
         function loopL(e) {
             for (let i = 0; i < ap; i++) {
-                arrRects[i].x += 10;
+                if (player.x + 0 >= arrRects[i].x && player.x <= arrRects[i].x + 0 && player.y <= arrRects[i].y + 0 || player.y + player.height >= arrRects[i].y + 0 + 0) {
+                    arrRects[i].x += 10;
+                }
 
             }
 
         }
-        function Null(e) {
 
-            return player.x + player.width <= arrRects[0].x || player.x >= arrRects[0].x + wall.width;// player.x < arrRects[i].x; //;// && player.y > arrRects[i].y && player.y < arrRects[i].y + arrRects[i].height;
-
-        }
 
 
         function gameLoop() {
@@ -169,33 +151,28 @@
             if (keys["87"]) {
                 player.y -= 30;
             }
-            if (keys["83"] || keys["40"]) {
+            if (keys["83"]) {
                 player.y += 5;
             }
-            if (Null()) {
-                if (keys["68"] || keys["39S"]) {
-                    loopR();
+            if (keys["68"]) {
+                loopR();
 
-                    if (wall.x <= player.x - 100) {
-                        alert("Finish!!! You are winner!");
-                        //renderer.backgroundColor = 0xFF00FF;
-                        //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 40, fill: 0xff1010, align: 'center' });
-                    }
+                if (wall.x <= player.x - 100) {
+                    alert("Finish!!! You are winner!");
+                    //renderer.backgroundColor = 0xFF00FF;
+                    //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 40, fill: 0xff1010, align: 'center' });
                 }
             }
 
             if (keys["65"]) {
-                //player.x -= 5;
                 loopL();
             }
         }
         function keysdown(e) {
-            //player.width /= 1.05;
             keys[e.keyCode] = true;
             console.log(keys);
         }
         function keysup(e) {
-            //player.height *= 1.05;
             keys[e.keyCode] = false;
         }
 
