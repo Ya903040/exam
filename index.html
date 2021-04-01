@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,48 +8,53 @@
     <title>Document</title>
     <script src="js/pixi.min.js"></script>
     <script>
+        let ap = 50;
         let app;
-        let me;
+        let player;
         let keys = {};
         let keysDiv;
         let rect;
-        let rect1;
+        let wall2;
+        let wall;
         let arrRects = [];
+        let arrRects2 = [];
         var street = 1200;
+
+        //alert("sss");
         /*function point (x,y,w,h){
             this.x = x;
             this.y = y;
             this.w = w;
             this.h = h;
         }*/
-        window.onload = function() {
+        window.onload = function () {
             app = new PIXI.Application(
                 {
-                    width : 2000,
-                    height : 600,
-                    backdroundColor : 0xAAAA
-            
+                    width: 2000,
+                    height: 600,
+                    backdroundColor: 0xBBCCDD
+
                 }
             );
-            
+
             //document.body.app.backgroundColor = "red";
             // players area
             document.querySelector("#gameDiv").appendChild(app.view);
 
             app.stage.interactive = true;
 
-            app.stage.on("pointerdown",pointerDown);
-            app.stage.on("pointerup",pointerUp);
+            app.stage.on("pointerdown", pointerDown);
+            app.stage.on("pointerup", pointerUp);
 
-            me = new PIXI.Sprite.from("images/superhero.png");
-            
-            me.anchor.set(0.5);
-            me.width = 50;
-            me.height = 50;
-            me.x = app.view.width / 2;
-            me.y = app.view.height / 2;
+            player = new PIXI.Sprite.from("images/superhero.png");
 
-            app.stage.addChild(me);
+            player.anchor.set(0.5);
+            player.width = 50;
+            player.height = 50;
+            player.x = 700;
+            player.y = app.view.height / 2;
+
+            app.stage.addChild(player);
 
             /*
 
@@ -61,131 +67,135 @@
             let a = 20;
 
             app.stage.interactive = true;
-            app.stage.on("pointermove", movePlayer); 
-            
+
             window.addEventListener("keydown", keysdown);
             window.addEventListener("keyup", keysup);
             app.ticker.add(gameLoop);
 
             keysDiv = document.querySelector("#keys");
+            var v = 9;
+            //alert(v);
+            for (let i = 0; i < ap; i++) {
+                wall = new PIXI.Sprite.from("images/mansory.png");
+                let min2 = 0;
+                let max2 = 50;
 
-            for (let i = 0; i < 5; i++){
-                rect1 = new PIXI.Sprite.from("images/square.png");
-                rect1.anchor.set(0.1);
-                rect1.x = app.view.width / 2 + 200 + i*50;
-                rect1.y = app.view.height / 2 + 160;
-                rect1.width = 10;
-                rect1.height = 200;
-                
+                //let rand2 =  Math.floor(Math.random() * (max2 - min2 + 1)) + min2;
 
-                if(keys["68"] && me.x >= street){
+                let min = 50;
+                let max = 200;
+                let rand = Math.floor(Math.random() * (max - min + 1)) + min;
+
+                wall.anchor.set(0.1);
+                wall.x = app.view.width / 2 + i * 200 + rand;
+                if (rand % 2 === 0) {
+                    wall.y = app.view.height / 2 - rand / 2 + 200;
+                    //v = app.view.width / 2 + i * 200 + rand;
+                }
+                else {
+                    wall.y = app.view.height / 2 - rand - 200;
+
+                }
+                //v = app.view.width / 2 + i * 200 + rand;
+                wall.width = 20;
+                wall.height = 200 + rand / 8;
+
+                v = wall.x;
+                arrRects[i] = wall;
+
+                if (keys["68"] && player.x >= street) {
                     street += 5;
-                    rect1.x -= 5;
+                    wall.x -= 5;
                     console.log(street);
                 }
-                if(keys["65"] && me.x <= street - 100){
+                if (keys["65"] && player.x <= street - 100) {
                     street -= 5;
-                    rect1.x += 5; 
+                    wall.x += 5;
                 }
-                app.stage.addChild(rect1);
+                app.stage.addChild(wall);
             }
 
 
-            /*
-            for (let i = 0; i < 5; i++){
-                //arrRects(i) = 
-                arrRects(i) = new PIXI.Sprite.from("images/square.png");
-                arrRects(i).anchor.set(0.01);
-                arrRects(i).x = app.view.width / 2 + 100 + i * 20;
-                arrRects(i).y = app.view.height / 2 + 160 + i;
-                arrRects(i).width = 20;
-                arrRects(i).height = 200;
+        }
+        function pointerDown(e) {
+            player.width *= 1.05;
+            player.height *= 1.05;
+
+        }
+        function pointerUp(e) {
+            player.width /= 1.05;
+            player.height /= 1.05;
+
+        }
+
+
+
+        function loopR(e) {
+            for (let i = 0; i < ap; i++) {
+                arrRects[i].x -= 10;
+
             }
-            */
-
-
-            //app.stage.addChild(rect);
-            //app.stage.addChild(rect1);
-
-
-           
-            //var myp = point;
-           
-                // result = (number-11)// 4 + 1
-                // print result 
-            
-            //app.stage.addChild(rect);
-
-            // players acts
-            
-        }
-        function pointerDown(e){
-            me.width *= 1.05;
-            me.height *= 1.05;
 
         }
-        function pointerUp(e){
-            me.width /= 1.05;
-            me.height /= 1.05;
+        function loopL(e) {
+            for (let i = 0; i < ap; i++) {
+                arrRects[i].x += 10;
+
+            }
 
         }
 
-        function gameLoop(){
+
+        function gameLoop() {
             //keysDiv.innerHTML = JSON.stringify(keys);
-            
-            
-            if(me){
-                me.y += 5;
-                if(me.y >= 585){
-                    me.y = 585;
+            if (player) {
+                player.y += 5;
+                if (player.y >= 585) {
+                    player.y = 585;
                 }
             }
-            if(keys["32"]){
-                me.y -= 30;     
-                if(me.y <= 15){
-                    me.y = 15;
+            if (keys["32"] || keys["38"]) {
+                player.y -= 30;
+                if (player.y <= 15) {
+                    player.y = 15;
                 }
             }
-            if(keys["87"]){
-                me.y -= 5;
+            if (keys["87"]) {
+                player.y -= 30;
             }
-            if(keys["83"]){
-                me.y += 5;
+            if (keys["83"] || keys["40"]) {
+                player.y += 5;
             }
-            if(keys["68"]){
-                me.x += 5;
-                if(me.x >= 1180 && me.x <= 1180 + 10 && me.y >= 460){
-                    me.x -=5;
+            if (keys["68"] || keys["18"]) {
+                loopR();
+                if (wall.x <= player.x - 100) {
+                    alert("Finish!!! You are winner!");
                 }
             }
-            if(keys["65"]){
-                me.x -= 5;
-                if(me.x <= 15){
-                    me.x = 15;
-                }
+            if (keys["65"]) {
+                //player.x -= 5;
+                loopL();
             }
         }
-        function movePlayer(its){
-            let pos = its.data.global;
-            me.x = pos.x;
-            me.y = pos.y;
-        }
-        function keysdown(e){
-            //me.width /= 1.05;
+        function keysdown(e) {
+            //player.width /= 1.05;
             keys[e.keyCode] = true;
-            //console.log(keys);
+            console.log(keys);
         }
-        function keysup(e){
-            //me.height *= 1.05;
+        function keysup(e) {
+            //player.height *= 1.05;
             keys[e.keyCode] = false;
         }
-        
+
+
     </script>
 </head>
+
 <body>
-    <div id = "gameDiv">
+    <div id="gameDiv">
 
     </div>
-    
+
 </body>
+
 </html>
