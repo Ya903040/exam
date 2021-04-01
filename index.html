@@ -32,7 +32,7 @@
                 {
                     width: 2000,
                     height: 600,
-                    backdroundColor: 0xBBCCDD
+                    backdroundColor: 0xFF00FF
 
                 }
             );
@@ -74,6 +74,7 @@
 
             keysDiv = document.querySelector("#keys");
             var v = 9;
+            //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 24, fill: 0xff1010, align: 'center' });
             //alert(v);
             for (let i = 0; i < ap; i++) {
                 wall = new PIXI.Sprite.from("images/mansory.png");
@@ -144,6 +145,11 @@
             }
 
         }
+        function Null(e) {
+
+            return player.x + player.width <= arrRects[0].x || player.x >= arrRects[0].x + wall.width;// player.x < arrRects[i].x; //;// && player.y > arrRects[i].y && player.y < arrRects[i].y + arrRects[i].height;
+
+        }
 
 
         function gameLoop() {
@@ -166,12 +172,18 @@
             if (keys["83"] || keys["40"]) {
                 player.y += 5;
             }
-            if (keys["68"] || keys["18"]) {
-                loopR();
-                if (wall.x <= player.x - 100) {
-                    alert("Finish!!! You are winner!");
+            if (Null()) {
+                if (keys["68"] || keys["39S"]) {
+                    loopR();
+
+                    if (wall.x <= player.x - 100) {
+                        alert("Finish!!! You are winner!");
+                        //renderer.backgroundColor = 0xFF00FF;
+                        //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 40, fill: 0xff1010, align: 'center' });
+                    }
                 }
             }
+
             if (keys["65"]) {
                 //player.x -= 5;
                 loopL();
