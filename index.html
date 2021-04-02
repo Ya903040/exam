@@ -25,8 +25,8 @@
                 {
                     width: 2000,
                     height: 600,
-                    backdroundColor: 0xFF00FF
-
+                    backgroundColor: 0xBBCCBB
+                    //document.body.style.backgroundColor = "#AA0000";
                 }
             );
 
@@ -110,13 +110,26 @@
             player.height /= 1.05;
 
         }
+        function GoingR(e){
+            for(let i = 0;i < ap;i++){
+                arrRects[i].x -= 0.5;
+            }
+        }
+        function GoingL(e){
+            for(let i = 0;i < ap; i++){
+                arrRects[i].x += 0.5;
+            }
+        }
 
 
 
         function loopR(e) {
             for (let i = 0; i < ap; i++) {
-                if (player.x + player.width <= arrRects[i].x && player.x >= arrRects[i].x + wall.width && player.y <= arrRects[i].y + wall.height || player.y + player.height >= arrRects[i].y + wall.height + 20) {
-                    arrRects[i].x -= 10;
+                
+                //arrRects[i].x -= 10;
+                if (player.x != arrRects[i].x + arrRects[i].width && player.y >= arrRects[i].y + arrRects[i].height && arrRects[i].y <= 300 
+                    || player.y <= arrRects[i].y + arrRects[i].height && arrRects[i].y >= 300) {
+                    GoingR();  
                 }
 
             }
@@ -124,10 +137,14 @@
         }
         function loopL(e) {
             for (let i = 0; i < ap; i++) {
-                if (player.x + 0 >= arrRects[i].x && player.x <= arrRects[i].x + 0 && player.y <= arrRects[i].y + 0 || player.y + player.height >= arrRects[i].y + 0 + 0) {
+                
+                /*if (player.x >= arrRects[i].x &&
+                    player.x <= arrRects[i].x + wall.width &&
+                    player.y <= arrRects[i].y + wall.height && player.y >= arrRects[i].y) {
+                    //player.y = 0;
                     arrRects[i].x += 10;
-                }
-
+                }*/
+                
             }
 
         }
@@ -159,6 +176,7 @@
 
                 if (wall.x <= player.x - 100) {
                     alert("Finish!!! You are winner!");
+                    document.body.style.backgroundColor = 0xCCDDAA;
                     //renderer.backgroundColor = 0xFF00FF;
                     //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 40, fill: 0xff1010, align: 'center' });
                 }
