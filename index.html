@@ -140,13 +140,16 @@
                 //arrRects[i].x -= 10;
                 if (player.x + player.width >= arrRects2[i].x && player.x <= arrRects2[i].x + arrRects2[i].width && (player.y + player.height >= arrRects2[i].y + arrRects2[i].height)
                     || player.y + player.height <= arrRects2[i].y + arrRects2[i].height) {
-                        GoingR();
-                        //GoingR();
+                        speed = 0;
+                        
                         
                 }
-                else if (player.x + player.width <= arrRects2[i].x && player.x >= arrRects2[i].x + arrRects2[i].width && (player.y + player.height <= arrRects2[i].y + arrRects2[i].height)
-                    || player.y + player.height >= arrRects2[i].y + arrRects2[i].height) {
-                    speed = 0;
+                else if (player.x + player.width <= arrRects[i].x && player.x >= arrRects[i].x + arrRects[i].width && (player.y + player.height <= arrRects[i].y + arrRects[i].height)
+                    || player.y + player.height >= arrRects[i].y + arrRects[i].height) {
+                        speed = 0;
+                }
+                else{
+                    GoingR();
                 }
                     
                  //if else
@@ -179,13 +182,13 @@
                 }
             }
             if (keys["32"] || keys["38"]) {
-                player.y -= 30;
+                player.y -= 20;
                 if (player.y <= 15) {
                     player.y = 15;
                 }
             }
             if (keys["87"]) {
-                player.y -= 30;
+                player.y -= 20;
             }
             if (keys["83"]) {
                 player.y += 5;
