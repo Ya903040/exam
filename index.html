@@ -29,7 +29,11 @@
                     width: 2000,
                     height: 600,
                     backgroundColor: 0xBBCCBB
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 }
             );
 
@@ -74,7 +78,11 @@
                 wall2.x = app.view.width / 2 + i * 200 + rand;
 
                 wall.y = app.view.height / 2 - rand / 2 + 200;
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 wall2.y = app.view.height / 2 - rand + gap;
 
                 wall.width = 20;
@@ -95,7 +103,11 @@
                     wall2.x += 5;
                     wall.x += 5;
                 }
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 app.stage.addChild(arrRectsLower[i]);
                 app.stage.addChild(arrRectsUpper[i]);
             }
@@ -103,6 +115,7 @@
 
         }
 
+<<<<<<< HEAD
         function GoingR(e) {
             for (let i = 0; i < ap; i++) {
                 arrRectsLower[i].x -= speed;
@@ -123,15 +136,43 @@
                 && obj1.y + obj1.height >= obj2.y
                 && obj1.y <= obj2.y + obj2.height) {
                 return true;
+=======
+        function GoingR(e){
+            for(let i = 0;i < ap;i++){
+                arrRectsLower[i].x -= speed;
+                arrRectsUpper[i].x -= speed;
+                
+            }
+        }
+        function GoingL(e){
+            for(let i = 0;i < ap; i++){
+                arrRectsLower[i].x += speed;
+                arrRectsUpper[i].x += speed;
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
             }
 
         }
 
+<<<<<<< HEAD
+=======
+        function isHit(obj1, obj2) {
+            if (   obj1.x + obj1.width >= obj2.x 
+                && obj1.x <= obj2.x + obj2.width 
+                && obj1.y + obj1.height >= obj2.y
+                && obj1.y <= obj2.y + obj2.height) 
+                {
+                    return true;
+                }
+            
+        }
+        
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
 
         function loopR(e) {
             for (let i = 0; i < ap; i++) {
                 if (isHit(player, arrRectsLower[i])) {
                     gameover = true;
+<<<<<<< HEAD
                     //console.log("Lower");
                     //console.log(gameover);
                 }
@@ -139,6 +180,15 @@
                     gameover = true;
                     //console.log("Upper");
                     //console.log(gameover);
+=======
+                    console.log("Lower");
+                    console.log(gameover);
+                }
+                if (isHit(player, arrRectsUpper[i])) {
+                    gameover = true;
+                    console.log("Upper");
+                    console.log(gameover);
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 }
                 else {
                     GoingR();
@@ -147,16 +197,26 @@
 
         }
         function loopL(e) {
+<<<<<<< HEAD
             for (let i = 0; i < ap; i++) {
+=======
+            for (let i = 0; i < ap; i++) {  
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 GoingL();
             }
 
         }
 
         function gameLoop() {
+<<<<<<< HEAD
 
             if (!gameover) {
 
+=======
+            
+            if (!gameover) {
+                
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 if (player) {
                     player.y += 5;
                     if (player.y >= 585) {
@@ -171,6 +231,7 @@
                 }
                 if (keys["87"]) {
                     player.y -= 10;
+<<<<<<< HEAD
                 }
                 if (keys["83"]) {
                     player.y += 5;
@@ -185,14 +246,34 @@
                     }
                 }
 
+=======
+                }
+                if (keys["83"]) {
+                    player.y += 5;
+                }
+                if (keys["68"]) {
+                    loopR();
+
+                    if (wall.x <= player.x - 100) {
+                        alert("Finish!!! You are winner!");
+                        document.body.style.backgroundColor = 0xCCDDAA;
+                        
+                    }
+                }
+
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
                 if (keys["65"]) {
                     loopL();
                 }
                 //GoingR();
+<<<<<<< HEAD
             }
             else {
                 alert("Game Over");
             }
+=======
+        }
+>>>>>>> 6f9c13472d35a4291a49f5ce4a76d978d7d86de0
         }
         function keysdown(e) {
             keys[e.keyCode] = true;
