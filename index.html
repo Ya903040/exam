@@ -9,7 +9,7 @@
     <script src="js/pixi.min.js"></script>
     <script>
         let ap = 50;
-        let speed = 2.0;
+        let speed = 0.1;
         let gap = -180;
         let app;
         let player;
@@ -29,16 +29,13 @@
                     width: 2000,
                     height: 600,
                     backgroundColor: 0xBBCCBB
-                    //document.body.style.backgroundColor = "#AA0000";
+        
                 }
             );
 
             document.querySelector("#gameDiv").appendChild(app.view);
 
             app.stage.interactive = true;
-
-            app.stage.on("pointerdown", pointerDown);
-            app.stage.on("pointerup", pointerUp);
 
             player = new PIXI.Sprite.from("images/superhero.png");
 
@@ -59,15 +56,13 @@
 
             keysDiv = document.querySelector("#keys");
             var v = 9;
-            //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 24, fill: 0xff1010, align: 'center' });
-            //alert(v);
+
             for (let i = 0; i < ap; i++) {
                 wall = new PIXI.Sprite.from("images/mansory.png");
                 wall2 = new PIXI.Sprite.from("images/mansory.png");
                 let min2 = 0;
                 let max2 = 50;
 
-                //let rand2 =  Math.floor(Math.random() * (max2 - min2 + 1)) + min2;
 
                 let min = 50;
                 let max = 200;
@@ -79,12 +74,9 @@
                 wall2.x = app.view.width / 2 + i * 200 + rand;
                 
                 wall.y = app.view.height / 2 - rand / 2 + 200;
-                    //v = app.view.width / 2 + i * 200 + rand;
                 
                 wall2.y = app.view.height / 2 - rand + gap;
 
-                
-                //v = app.view.width / 2 + i * 200 + rand;
                 wall.width = 20;
                 wall.height = 200 + rand / 8;
 
@@ -103,22 +95,14 @@
                     wall2.x += 5;
                     wall.x += 5;
                 }
-                app.stage.addChild(wall);
-                app.stage.addChild(wall2);
+                
+                app.stage.addChild(arrRectsLower[i]);
+                app.stage.addChild(arrRectsUpper[i]);
             }
 
 
         }
-        function pointerDown(e) {
-            player.width *= 1.05;
-            player.height *= 1.05;
 
-        }
-        function pointerUp(e) {
-            player.width /= 1.05;
-            player.height /= 1.05;
-
-        }
         function GoingR(e){
             for(let i = 0;i < ap;i++){
                 arrRectsLower[i].x -= speed;
@@ -143,14 +127,19 @@
                 }
             
         }
+        
 
         function loopR(e) {
             for (let i = 0; i < ap; i++) {
                 if (isHit(player, arrRectsLower[i])) {
                     gameover = true;
+                    console.log("Lower");
+                    console.log(gameover);
                 }
-                else if (isHit(player, arrRectsUpper[i])) {
+                if (isHit(player, arrRectsUpper[i])) {
                     gameover = true;
+                    console.log("Upper");
+                    console.log(gameover);
                 }
                 else{
                     GoingR();
@@ -168,6 +157,7 @@
         function gameLoop() {
             
             if (!gameover) {
+                
                 if (player) {
                     player.y += 5;
                     if (player.y >= 585) {
@@ -175,13 +165,13 @@
                     }
                 }
                 if (keys["32"] || keys["38"]) {
-                    player.y -= 20;
+                    player.y -= 15;
                     if (player.y <= 15) {
                         player.y = 15;
                     }
                 }
                 if (keys["87"]) {
-                    player.y -= 20;
+                    player.y -= 10;
                 }
                 if (keys["83"]) {
                     player.y += 5;
@@ -192,15 +182,14 @@
                     if (wall.x <= player.x - 100) {
                         alert("Finish!!! You are winner!");
                         document.body.style.backgroundColor = 0xCCDDAA;
-                        //renderer.backgroundColor = 0xFF00FF;
-                        //let text = new PIXI.Text('This is a PixiJS text', { fontFamily: 'Arial', fontSize: 40, fill: 0xff1010, align: 'center' });
+                        
                     }
                 }
 
                 if (keys["65"]) {
                     loopL();
                 }
-                GoingR();
+                //GoingR();
         }
         }
         function keysdown(e) {
